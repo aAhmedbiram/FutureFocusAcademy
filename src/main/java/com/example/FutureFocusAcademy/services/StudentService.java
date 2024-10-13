@@ -2,7 +2,6 @@ package com.example.FutureFocusAcademy.services;
 
 import com.example.FutureFocusAcademy.document.Student;
 import com.example.FutureFocusAcademy.dto.StudentDTO;
-import com.example.FutureFocusAcademy.mapper.StudentMapper;
 import com.example.FutureFocusAcademy.repo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +13,6 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
-    @Autowired
-    private StudentDTO studentDTO;
-    @Autowired
-    StudentMapper mapper;
 
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
@@ -32,7 +27,6 @@ public class StudentService {
         student.setName(studentDTO.getName());
         student.setEmail(studentDTO.getEmail());
         student.setCourse(studentDTO.getCourse());
-//        student.setGrade(StudentDTO.getGrade());
         return studentRepository.save(student);
     }
 
