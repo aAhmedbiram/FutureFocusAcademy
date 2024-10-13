@@ -14,7 +14,6 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
@@ -30,7 +29,6 @@ public class StudentService {
         student.setCourse(studentDTO.getCourse());
         return studentRepository.save(student);
     }
-
 
     public Student updateStudent(String id, StudentDTO studentDTO) {
         Student student = studentRepository.findById(id)

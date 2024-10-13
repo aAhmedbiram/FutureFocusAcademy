@@ -30,7 +30,6 @@ public class StudentController {
         return studentService.createStudent(studentDTO);
     }
 
-
     @PutMapping("/{id}")
     public Student updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO) {
         return studentService.updateStudent(id, studentDTO);

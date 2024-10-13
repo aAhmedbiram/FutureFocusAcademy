@@ -4,7 +4,6 @@ import com.example.FutureFocusAcademy.model.Grades;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Bean;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +14,6 @@ public class StudentDTO {
     private String email;
     private String course;
 //    private Grades grades;
-
 
 
 }
