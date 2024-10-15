@@ -5,13 +5,17 @@ import com.example.FutureFocusAcademy.dto.AdminDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AdminMapper {
+public class AdminMapper extends AbstractMapper<AdminDto, Admin> {
 
-    public AdminDto toDto(Admin admin) {
-        return new AdminDto(admin.getId(), admin.getName(), admin.getEmail());
+    public AdminMapper() {
+        super(AdminDto.class, Admin.class);
     }
 
-    public Admin toEntity(AdminDto adminDto) {
-        return new Admin(adminDto.getId(), adminDto.getName(), adminDto.getEmail(), null);  // Password is set separately
+    @Override
+    public Admin updateToEntity(AdminDto dto, Admin entity) {
+        entity.setName(dto.getName());
+        entity.setEmail(dto.getEmail());
+        // Update additional fields as needed
+        return entity;  // Return the updated entity
     }
 }
