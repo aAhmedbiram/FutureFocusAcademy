@@ -8,8 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
+    @Bean(name = "appPasswordEncoder") // Specify the bean name here
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    // Remove the field injection of PasswordEncoder
 }

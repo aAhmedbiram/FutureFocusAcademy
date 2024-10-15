@@ -1,13 +1,13 @@
-package com.example.FutureFocusAcademy.config;
+package com.example.FutureFocusAcademy.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AppConfig {
+public class MapperConfiguration {
 
-    @Bean
+    @Bean(name = "customModelMapper") // Rename the bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
