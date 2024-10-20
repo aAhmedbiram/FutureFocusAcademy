@@ -1,4 +1,4 @@
-package com.example.FutureFocusAcademy.mapper;
+package com.example.FutureFocusAcademy.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
