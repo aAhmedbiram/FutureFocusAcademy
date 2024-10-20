@@ -29,6 +29,11 @@ public class Student implements BaseUser {
         return password;
     }
 
+    @Override
+    public String getFullName() {
+        return "";
+    }
+
 //    @Override
 //    public String getFullName() {
 //        return fullName;
