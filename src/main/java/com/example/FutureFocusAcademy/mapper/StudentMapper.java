@@ -12,12 +12,15 @@ public class StudentMapper extends AbstractMapper<StudentDTO, Student> {
 
     @Override
     public Student updateToEntity(StudentDTO dto, Student entity) {
-        if (dto.getName() !=null && dto.getName().isEmpty())
-            entity.setName(dto.getName());
-        if (dto.getEmail() !=null && dto.getEmail().isEmpty())
+        if (dto.getFullName() != null && !dto.getFullName().isEmpty()) {
+            entity.setFullName(dto.getFullName()); // Change to setFullName
+        }
+        if (dto.getEmail() != null && !dto.getEmail().isEmpty()) {
             entity.setEmail(dto.getEmail());
-        if (dto.getCourse() !=null && dto.getCourse().isEmpty())
+        }
+        if (dto.getCourse() != null && !dto.getCourse().isEmpty()) {
             entity.setCourse(dto.getCourse());
+        }
         return entity;
     }
 }

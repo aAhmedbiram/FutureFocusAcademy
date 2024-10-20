@@ -1,19 +1,14 @@
 package com.example.FutureFocusAcademy.dto;
 
-import com.example.FutureFocusAcademy.model.Grades;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@Setter
+@Getter
 public class StudentDTO {
-    private String id;
-    private String name;
+    // Getters and setters
+    private String fullName; // Change from name to fullName
     private String email;
     private String course;
-//    private Grades grades;
-
 
 }
