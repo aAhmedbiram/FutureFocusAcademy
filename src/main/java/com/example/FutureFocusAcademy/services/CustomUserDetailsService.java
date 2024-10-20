@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.FutureFocusAcademy.model.BaseUser;
 import com.example.FutureFocusAcademy.model.UserDetailsImpl;
-import com.example.FutureFocusAcademy.repository.UserRepository; // Use the correct repository
+import com.example.FutureFocusAcademy.repo.UserRepository; // Use the correct repository
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -18,10 +18,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        BaseUser user = userRepository.findByUsername(username); // Implement this method in your repository
+        BaseUser user = userRepository.findByUsername(username); // Ensure this method works in your repository
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new UserDetailsImpl(user); // Modify this to handle your UserDetailsImpl based on BaseUser
+        return new UserDetailsImpl(user); // Make sure UserDetailsImpl accepts BaseUser and handles it correctly
     }
 }
