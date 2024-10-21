@@ -1,17 +1,16 @@
 package com.example.FutureFocusAcademy.dto;
 
-import com.example.FutureFocusAcademy.model.Auditable;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class AdminDto extends Auditable {
-    private String id;
-    private String name;
-    private String email;
+public class Credentials {
+    @NotEmpty
+    private String username;
+    @NotEmpty
     private String password;
-    private String role;
 }

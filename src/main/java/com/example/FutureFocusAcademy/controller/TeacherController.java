@@ -1,8 +1,12 @@
 package com.example.FutureFocusAcademy.controller;
 
 import com.example.FutureFocusAcademy.document.Teacher;
+import com.example.FutureFocusAcademy.dto.PageResult;
 import com.example.FutureFocusAcademy.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,5 +55,14 @@ public class TeacherController {
     public ResponseEntity<Void> deleteTeacher(@PathVariable String id) {
         teacherService.deleteTeacher(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public PageResult search(@RequestParam(required = false) String name,
+                             @RequestParam(required = false) String subject,
+                             @RequestHeader(required = false,defaultValue = "0") int page,
+                             @RequestHeader(required = false,defaultValue = "15") int size){
+        Pageable pageable= PageRequest.of(page,size, Sort.by(Sort.Direction.DESC,"name"));
+        return teacherService.search(name,subject,pageable);
     }
 }
