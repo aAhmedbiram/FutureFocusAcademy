@@ -1,6 +1,8 @@
 package com.example.FutureFocusAcademy.services;
 
 import com.example.FutureFocusAcademy.document.Student;
+import com.example.FutureFocusAcademy.document.Subject;
+import com.example.FutureFocusAcademy.document.Teacher;
 import com.example.FutureFocusAcademy.dto.PageResult;
 import com.example.FutureFocusAcademy.dto.StudentDTO;
 import com.example.FutureFocusAcademy.repo.StudentRepository;
@@ -71,5 +73,12 @@ public class StudentService {
             return studentMapper.toDto(student);
         }).toList();
         return PageResult.builder().item(studentDTOS).count(count).build();
+    }
+
+    public Student miniUpdate(Subject subject) {
+        subject.getStudent();
+        Teacher teacher=new Teacher();
+        teacher.setSubject(subject.getStudentGrade());
+        return miniUpdate(subject);
     }
 }

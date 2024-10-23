@@ -1,6 +1,7 @@
 package com.example.FutureFocusAcademy.controller;
 
 import com.example.FutureFocusAcademy.document.Student;
+import com.example.FutureFocusAcademy.document.Subject;
 import com.example.FutureFocusAcademy.dto.PageResult;
 import com.example.FutureFocusAcademy.dto.StudentDTO;
 import com.example.FutureFocusAcademy.services.StudentService;
@@ -51,5 +52,10 @@ public class StudentController {
                              @RequestHeader(required = false,defaultValue = "15") int size){
         Pageable pageable= PageRequest.of(page,size, Sort.by(Sort.Direction.DESC,"name"));
         return studentService.search(name,course,pageable);
+    }
+
+    @PatchMapping
+    public Student miniUpdate(@RequestBody Subject subject){
+        return studentService.miniUpdate(subject);
     }
 }
