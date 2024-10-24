@@ -1,5 +1,6 @@
 package com.example.FutureFocusAcademy.Utils;
 
+import com.example.FutureFocusAcademy.document.SubUser;
 import com.example.FutureFocusAcademy.model.TokenInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 
 @Component
 public class JwtUtils {
-    public String generate(Admin admin){
+    public String generate(SubUser admin){
         HashMap<String ,Object> claims= new HashMap<>();
         claims.put("user id",admin.getId());
         claims.put("username",admin.getName());

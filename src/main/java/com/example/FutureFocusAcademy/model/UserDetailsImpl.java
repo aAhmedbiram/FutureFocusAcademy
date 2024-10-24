@@ -1,5 +1,6 @@
 package com.example.FutureFocusAcademy.model;
 
+import com.example.FutureFocusAcademy.document.SubUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,7 +10,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private final BaseUser user;
 
-    public UserDetailsImpl(BaseUser user) {
+    public UserDetailsImpl(SubUser user) {
         this.user = user;
     }
 
