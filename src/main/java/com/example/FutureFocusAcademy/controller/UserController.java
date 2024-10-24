@@ -1,5 +1,6 @@
 package com.example.FutureFocusAcademy.controller;
 
+import com.example.FutureFocusAcademy.document.SubUser;
 import com.example.FutureFocusAcademy.dto.PageResult;
 import com.example.FutureFocusAcademy.dto.SubUserDto;
 import com.example.FutureFocusAcademy.services.UserService;
@@ -41,5 +42,9 @@ public class UserController {
                              @RequestHeader(required = false,defaultValue = "15")int size){
         Pageable pageable= PageRequest.of(page,size, Sort.by(Sort.Direction.DESC,"name"));
         return service.search(name,email,pageable);
+    }
+    @PatchMapping
+    public SubUserDto miniUpdate(@PathVariable String id,@RequestBody SubUser subUser){
+        return service.miniUpdate(id, subUser);
     }
 }

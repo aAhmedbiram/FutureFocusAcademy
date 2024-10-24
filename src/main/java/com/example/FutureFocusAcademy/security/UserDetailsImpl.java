@@ -1,5 +1,6 @@
 package com.example.FutureFocusAcademy.security;
 
+import com.example.FutureFocusAcademy.document.SubUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,19 +10,14 @@ import java.util.List;
 public class UserDetailsImpl implements UserDetails {
     private final String username;
     private final String password;
+    private final String email;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(BaseUser user) {
-        this.username = user.getUsername();
+    public UserDetailsImpl(SubUser user) {
+        this.username = user.getName();
         this.password = user.getPassword();
-        // Example additional field
-        String fullName = user.getFullName();
-        // Example additional field
-        String email = user.getEmail();
+        this.email = user.getEmail();
     }
-
-    // Implement other UserDetails methods
-    // ...
 
     @Override
     public String getUsername() {

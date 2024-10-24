@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,17 +77,24 @@ public class UserService {
     public PageResult search(String name, String email, Pageable pageable) {
         Query query = new Query();
         if (name!= null)
-            query.addCriteria(Criteria.where("name").regex("1"));
+            query.addCriteria(Criteria.where("name").regex(name,"i"));
         if (email!=null)
-            query.addCriteria(Criteria.where("email").regex("1"));
+            query.addCriteria(Criteria.where("email").regex(email,"i"));
         List<SubUserDto> users= template.find(query.with(pageable),SubUser.class).stream().map(user->{
             return mapper.toDto(user);
 
         }).collect(Collectors.toList());
         Long count=template.count(query,SubUser.class);
-        List SubUser = List.of();
-        return PageRequest.builder().item(SubUser).count(count).build();
+        List <SubUserDto> subUserDtos = template.find(query,SubUser.class).stream().map(subUser -> {
+            return mapper.toDto(subUser);
+        }).collect(Collectors.toList());
+        return PageResult.builder().item(subUserDtos).count(count).build();
     }
 
+    public SubUserDto miniUpdate(String id, SubUser subUser) {
+        Optional<SubUser> subUser1=repository.findById(id);
+        subUser1.get().getSubject().setStudentGrade(subUser.getSubject().getStudentGrade());
+        return mapper.toDto(subUser1.get());
+    }
 }
 

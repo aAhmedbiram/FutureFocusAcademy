@@ -30,6 +30,7 @@ public class SecurityConfig {
                     authz.requestMatchers(HttpMethod.PUT).hasRole("ADMIN");
                     authz.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN");
                     authz.requestMatchers(HttpMethod.PATCH).hasRole("TEACHER");
+                    authz.requestMatchers(HttpMethod.GET).permitAll();
                     authz.anyRequest().authenticated();
 
                 }).formLogin(httpSecurityFormLoginConfigurer -> {

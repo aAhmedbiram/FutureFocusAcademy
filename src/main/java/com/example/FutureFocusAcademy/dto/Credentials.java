@@ -13,4 +13,6 @@ public class Credentials {
     private String username;
     @NotEmpty
     private String password;
+    @NotEmpty
+    private String email;
 }

@@ -5,6 +5,7 @@ import com.example.FutureFocusAcademy.document.SubUser;
 import com.example.FutureFocusAcademy.dto.Credentials;
 import com.example.FutureFocusAcademy.exceptions.CustomException;
 import com.example.FutureFocusAcademy.model.TokenInfo;
+import com.example.FutureFocusAcademy.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -16,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.FutureFocusAcademy.model.UserDetailsImpl;
 import com.example.FutureFocusAcademy.repo.UserRepository; // Use the correct repository
 
 @Service
@@ -37,8 +37,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     JwtUtils jwtUtils;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SubUser user = userRepository.findByUsername(username); // Ensure this method works in your repository
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        SubUser user = userRepository.findByEmail(email); // Ensure this method works in your repository
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
@@ -57,7 +57,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public String login(Credentials credentials){
         SubUser user;
         try{
-            user=userRepository.findByUsername(credentials.getUsername());
+            user=userRepository.findByEmail(credentials.getEmail());
         }catch (Exception ex){
             throw new CustomException(" credentials invalid", HttpStatus.UNAUTHORIZED);
         }

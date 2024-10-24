@@ -22,5 +22,6 @@ public class SubUser extends Auditable {
     private String name;
     private String password;
     private String role;
-    private HashMap<Subject,Subject> subject; //?
+    private Subject subject;
+    private HashMap<String,Object> student;
 }
