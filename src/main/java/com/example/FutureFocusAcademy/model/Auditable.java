@@ -13,4 +13,5 @@ public abstract class Auditable {
     private LocalDateTime createdAt;
     @JsonIgnore
     private String createdBY;
+
 }

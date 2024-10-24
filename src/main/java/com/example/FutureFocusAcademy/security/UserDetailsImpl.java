@@ -10,14 +10,19 @@ import java.util.List;
 public class UserDetailsImpl implements UserDetails {
     private final String username;
     private final String password;
-    private final String email;
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(SubUser user) {
-        this.username = user.getName();
+        this.username = user.getEmail();
         this.password = user.getPassword();
-        this.email = user.getEmail();
+        // Example additional field
+        String fullName = user.getName();
+        // Example additional field
+        String email = user.getEmail();
     }
+
+    // Implement other UserDetails methods
+    // ...
 
     @Override
     public String getUsername() {
