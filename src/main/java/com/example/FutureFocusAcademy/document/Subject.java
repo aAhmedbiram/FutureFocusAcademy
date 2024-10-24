@@ -18,8 +18,5 @@ public class Subject {
     private String name;
     @NotEmpty
     private String studentGrade;
-    @NotEmpty
-    private Student student;
-    @NotEmpty
-    private Teacher teacher;
+    private SubUser user;
 }

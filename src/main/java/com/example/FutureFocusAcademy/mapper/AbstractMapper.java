@@ -1,5 +1,7 @@
 package com.example.FutureFocusAcademy.mapper;
 
+import com.example.FutureFocusAcademy.document.SubUser;
+import com.example.FutureFocusAcademy.dto.SubUserDto;
 import jakarta.annotation.PostConstruct;
 import lombok.Setter;
 import org.modelmapper.Conditions;
@@ -13,8 +15,8 @@ public abstract class AbstractMapper<D, E> implements Mapper<D, E> {
     @Setter
     private ModelMapper modelMapper;
 
-    private final Class<D> dClass;
-    private final Class<E> eClass;
+    private  Class<D> dClass;
+    private  Class<E> eClass;
 
     public AbstractMapper(Class<D> dClass, Class<E> eClass) {
         this.dClass = dClass;

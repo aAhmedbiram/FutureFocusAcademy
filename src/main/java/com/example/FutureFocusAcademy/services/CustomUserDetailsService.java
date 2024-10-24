@@ -1,11 +1,9 @@
 package com.example.FutureFocusAcademy.services;
 
 import com.example.FutureFocusAcademy.Utils.JwtUtils;
-import com.example.FutureFocusAcademy.document.Admin;
 import com.example.FutureFocusAcademy.dto.Credentials;
 import com.example.FutureFocusAcademy.exceptions.CustomException;
 import com.example.FutureFocusAcademy.model.TokenInfo;
-import com.example.FutureFocusAcademy.repo.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -17,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.FutureFocusAcademy.model.BaseUser;
 import com.example.FutureFocusAcademy.model.UserDetailsImpl;
 import com.example.FutureFocusAcademy.repo.UserRepository; // Use the correct repository
 

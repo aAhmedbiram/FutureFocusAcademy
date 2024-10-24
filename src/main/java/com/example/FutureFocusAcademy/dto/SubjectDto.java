@@ -1,7 +1,6 @@
 package com.example.FutureFocusAcademy.dto;
 
-import com.example.FutureFocusAcademy.document.Student;
-import com.example.FutureFocusAcademy.document.Teacher;
+import com.example.FutureFocusAcademy.document.SubUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,7 @@ public class SubjectDto {
     private String id;
     private String name;
     private String studentGrade;
-    private Student student;
-    private Teacher teacher;
+    private SubUser user;
+
+
 }

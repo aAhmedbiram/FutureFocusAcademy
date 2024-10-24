@@ -1,6 +1,5 @@
 package com.example.FutureFocusAcademy.Utils;
 
-import com.example.FutureFocusAcademy.document.Admin;
 import com.example.FutureFocusAcademy.model.TokenInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

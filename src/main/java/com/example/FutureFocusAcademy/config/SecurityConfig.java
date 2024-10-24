@@ -2,6 +2,7 @@ package com.example.FutureFocusAcademy.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,12 +23,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authz -> authz
-                        .anyRequest().authenticated()
-                )
-                .formLogin()
-                .and()
-                .httpBasic();
+                .authorizeHttpRequests(authz -> {
+                    authz.requestMatchers("*/swagger-ui.html").permitAll();
+                    authz.requestMatchers("*/admin").hasRole("ADMIN");
+                    authz.requestMatchers(HttpMethod.POST).hasRole("ADMIN");
+                    authz.requestMatchers(HttpMethod.PUT).hasRole("ADMIN");
+                    authz.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN");
+                    authz.requestMatchers(HttpMethod.PATCH).hasRole("TEACHER");
+                    authz.anyRequest().authenticated();
+
+                }).formLogin(httpSecurityFormLoginConfigurer -> {
+
+                }).httpBasic(httpSecurityHttpBasicConfigurer -> {
+
+                });
+
 
         return http.build();
     }

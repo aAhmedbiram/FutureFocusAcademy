@@ -1,6 +1,5 @@
 package com.example.FutureFocusAcademy.security;
 
-import com.example.FutureFocusAcademy.model.BaseUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
