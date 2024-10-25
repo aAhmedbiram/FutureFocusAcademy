@@ -30,5 +30,5 @@ public class SubUser extends Auditable {
     @NotEmpty
     private String role;
     private Subject subject;
-    private HashMap<String,Object> student;
+
 }

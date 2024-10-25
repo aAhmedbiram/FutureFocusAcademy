@@ -1,5 +1,6 @@
 package com.example.FutureFocusAcademy.document;
 
+import com.example.FutureFocusAcademy.model.Grades;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class Subject {
     private String id;
     @NotEmpty
     private String name;
+    private Grades studentGrade;
     @NotEmpty
-    private String studentGrade;
     private SubUser user;
 }

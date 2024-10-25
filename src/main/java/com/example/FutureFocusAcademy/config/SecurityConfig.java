@@ -24,14 +24,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> {
-                    authz.requestMatchers("*/swagger-ui.html").permitAll();
-                    authz.requestMatchers("*/admin").hasRole("ADMIN");
-                    authz.requestMatchers(HttpMethod.POST).hasRole("ADMIN");
-                    authz.requestMatchers(HttpMethod.PUT).hasRole("ADMIN");
-                    authz.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN");
-                    authz.requestMatchers(HttpMethod.PATCH).hasRole("TEACHER");
-                    authz.requestMatchers(HttpMethod.GET).permitAll();
-                    authz.anyRequest().authenticated();
+                    authz.anyRequest().permitAll();
+//                    authz.requestMatchers("*/swagger-ui.html").permitAll();
+//                    authz.requestMatchers("*/admin").hasRole("ADMIN");
+//                    authz.requestMatchers(HttpMethod.POST).hasRole("ADMIN");
+//                    authz.requestMatchers(HttpMethod.PUT).hasRole("ADMIN");
+//                    authz.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN");
+//                    authz.requestMatchers(HttpMethod.PATCH).hasRole("TEACHER");
+//                    authz.requestMatchers(HttpMethod.GET).permitAll();
+//                    authz.anyRequest().authenticated();
 
                 }).formLogin(httpSecurityFormLoginConfigurer -> {
 
