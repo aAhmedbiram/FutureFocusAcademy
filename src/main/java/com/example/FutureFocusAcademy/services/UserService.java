@@ -1,11 +1,14 @@
 package com.example.FutureFocusAcademy.services;
 
+import com.example.FutureFocusAcademy.Utils.JwtUtils;
 import com.example.FutureFocusAcademy.document.SubUser;
+import com.example.FutureFocusAcademy.dto.Credentials;
 import com.example.FutureFocusAcademy.dto.PageResult;
 import com.example.FutureFocusAcademy.dto.SubUserDto;
 import com.example.FutureFocusAcademy.exceptions.CustomException;
 import com.example.FutureFocusAcademy.mapper.UserMapper;
 import com.example.FutureFocusAcademy.repo.UserRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +24,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Builder
 public class UserService {
     @Autowired
     UserRepository repository;
@@ -31,15 +33,20 @@ public class UserService {
     PasswordEncoder password;
     @Autowired
     UserMapper mapper;
-
-    public void init(SubUser subUser){
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    JwtUtils jwtUtils;
+    @PostConstruct
+    public void init(){
         Query query = new Query();
         query.addCriteria(Criteria.where("role").is("ADMIN"));
         if (!template.exists(query, SubUser.class)){
-            template.save(subUser, builder().build().toString());
+            template.save(SubUser.builder().role("ADMIN").password(passwordEncoder.encode("admin")).email("admin").build(),"user");
         }
     }
     public String save(SubUserDto dto) {
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         Query query =new Query();
         query.addCriteria(Criteria.where("_id").is(dto.getId()));
         if (template.exists(query,SubUser.class))
@@ -57,6 +64,7 @@ public class UserService {
     }
 
     public void update(String id, SubUserDto dto) {
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         Query query =new Query();
         query.addCriteria(Criteria.where("email").is(dto.getEmail()));
         query.addCriteria(Criteria.where("_id").is(id));
@@ -95,6 +103,18 @@ public class UserService {
         Optional<SubUser> subUser1=repository.findById(id);
         subUser1.get().getSubject().setStudentGrade(subUser.getSubject().getStudentGrade());
         return mapper.toDto(subUser1.get());
+    }
+    public String login(Credentials credentials){
+        SubUser user;
+        try{
+            user=repository.findByEmail(credentials.getEmail());
+        }catch (Exception ex){
+            throw new CustomException(" credentials invalid", HttpStatus.UNAUTHORIZED);
+        }
+        if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword() )){
+            throw new CustomException(" credentials invalid", HttpStatus.UNAUTHORIZED);
+        }
+        return jwtUtils.generate(user);
     }
 }
 

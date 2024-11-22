@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class TokenInfo {
-    private String username;
+    private String email;
     private String userId;
     private String roles;
     private Date ExpiredAt;

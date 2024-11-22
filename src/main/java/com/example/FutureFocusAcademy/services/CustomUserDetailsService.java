@@ -5,12 +5,13 @@ import com.example.FutureFocusAcademy.document.SubUser;
 import com.example.FutureFocusAcademy.dto.Credentials;
 import com.example.FutureFocusAcademy.exceptions.CustomException;
 import com.example.FutureFocusAcademy.model.TokenInfo;
-import com.example.FutureFocusAcademy.security.UserDetailsImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,33 +38,22 @@ public class CustomUserDetailsService implements UserDetailsService {
     JwtUtils jwtUtils;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        SubUser user = userRepository.findByEmail(email); // Ensure this method works in your repository
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return new UserDetailsImpl(user); // Make sure UserDetailsImpl accepts BaseUser and handles it correctly
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        SubUser user = userRepository.findByEmail(username); // Ensure this method works in your repository
+        return User.withUsername(user.getEmail()).password(user.getPassword()).roles(user.getRole()).authorities(user.getRole()).build();
     }
 
     public Boolean isValid(TokenInfo tokenInfo){
         Query query= new Query();
-        query.addCriteria(Criteria.where("username").is(tokenInfo.getUsername()));
+        query.addCriteria(Criteria.where("email").is(tokenInfo.getEmail()));
         query.addCriteria(Criteria.where("userId").is(tokenInfo.getUserId()));
-        query.addCriteria(Criteria.where("roles").is(tokenInfo.getRoles()));
+        query.addCriteria(Criteria.where("role").is(tokenInfo.getRoles()));
 
-        return template.exists(query, SubUser.class);
+        if (!template.exists(query,SubUser.class)){
+            return false;
+        }
+        return true;
     }
 
-    public String login(Credentials credentials){
-        SubUser user;
-        try{
-            user=userRepository.findByEmail(credentials.getEmail());
-        }catch (Exception ex){
-            throw new CustomException(" credentials invalid", HttpStatus.UNAUTHORIZED);
-        }
-        if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword() )){
-            throw new CustomException(" credentials invalid", HttpStatus.UNAUTHORIZED);
-        }
-        return jwtUtils.generate(user);
-    }
+
 }

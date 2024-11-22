@@ -1,6 +1,7 @@
 package com.example.FutureFocusAcademy.controller;
 
 import com.example.FutureFocusAcademy.document.SubUser;
+import com.example.FutureFocusAcademy.dto.Credentials;
 import com.example.FutureFocusAcademy.dto.PageResult;
 import com.example.FutureFocusAcademy.dto.SubUserDto;
 import com.example.FutureFocusAcademy.services.UserService;
@@ -46,5 +47,9 @@ public class UserController {
     @PatchMapping
     public SubUserDto miniUpdate(@PathVariable String id,@RequestBody SubUser subUser){
         return service.miniUpdate(id, subUser);
+    }
+    @PostMapping("/login")
+    public  String login(@RequestBody Credentials credentials){
+        return service.login(credentials);
     }
 }
