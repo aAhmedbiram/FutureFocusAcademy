@@ -9,7 +9,6 @@ import com.example.FutureFocusAcademy.exceptions.CustomException;
 import com.example.FutureFocusAcademy.mapper.UserMapper;
 import com.example.FutureFocusAcademy.repo.UserRepository;
 import jakarta.annotation.PostConstruct;
-import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -82,21 +81,22 @@ public class UserService {
         return mapper.toDto(template.findOne(query,SubUser.class));
     }
 
-    public PageResult search(String name, String email, Pageable pageable) {
+    public PageResult search(String name, String email, String roles, Pageable pageable) {
         Query query = new Query();
-        if (name!= null)
-            query.addCriteria(Criteria.where("name").regex(name,"i"));
-        if (email!=null)
-            query.addCriteria(Criteria.where("email").regex(email,"i"));
+        if (name!= null){
+            query.addCriteria(Criteria.where("name").regex(name,"i"));}
+        if (email!=null){
+            query.addCriteria(Criteria.where("email").regex(email,"i"));}
+        if (roles != null && roles.isEmpty()){
+            query.addCriteria(Criteria.where("roles").is(roles));
+        }
         List<SubUserDto> users= template.find(query.with(pageable),SubUser.class).stream().map(user->{
             return mapper.toDto(user);
 
         }).collect(Collectors.toList());
-        Long count=template.count(query,SubUser.class);
-        List <SubUserDto> subUserDtos = template.find(query,SubUser.class).stream().map(subUser -> {
-            return mapper.toDto(subUser);
-        }).collect(Collectors.toList());
-        return PageResult.builder().item(subUserDtos).count(count).build();
+        Long count =template.count(query,SubUser.class);
+        List< SubUserDto> user = template.find(query.with(pageable),SubUser.class).stream().map(mapper::toDto).toList();
+        return PageResult.builder().item(user).count(count).build();
     }
 
     public SubUserDto miniUpdate(String id, SubUser subUser) {

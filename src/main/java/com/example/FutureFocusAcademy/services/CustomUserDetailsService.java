@@ -46,7 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public Boolean isValid(TokenInfo tokenInfo){
         Query query= new Query();
         query.addCriteria(Criteria.where("email").is(tokenInfo.getEmail()));
-        query.addCriteria(Criteria.where("userId").is(tokenInfo.getUserId()));
+        query.addCriteria(Criteria.where("_id").is(tokenInfo.getUserId()));
         query.addCriteria(Criteria.where("role").is(tokenInfo.getRoles()));
 
         if (!template.exists(query,SubUser.class)){

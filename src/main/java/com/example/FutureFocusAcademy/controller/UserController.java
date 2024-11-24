@@ -39,10 +39,11 @@ public class UserController {
     @GetMapping("/search")
     public PageResult search(@RequestParam(required = false)String name,
                              @RequestParam(required = false)String email,
+                             @RequestParam(required = false)String roles,
                              @RequestHeader(required = false,defaultValue = "0")int page,
                              @RequestHeader(required = false,defaultValue = "15")int size){
         Pageable pageable= PageRequest.of(page,size, Sort.by(Sort.Direction.DESC,"name"));
-        return service.search(name,email,pageable);
+        return service.search(name,email,roles,pageable);
     }
     @PatchMapping
     public SubUserDto miniUpdate(@PathVariable String id,@RequestBody SubUser subUser){

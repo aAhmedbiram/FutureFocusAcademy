@@ -61,8 +61,8 @@ public class JwtUtils {
     {
         Claims claims=Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
         return TokenInfo.builder().email(claims.get("email").toString())
-                .userId(claims.get("userId").toString())
-                .roles(claims.get("roles").toString())
+                .userId(claims.get("user id").toString())
+                .roles(claims.get("role").toString())
                 .IssuedAt(claims.getIssuedAt())
                 .ExpiredAt(claims.getExpiration())
                 .build();

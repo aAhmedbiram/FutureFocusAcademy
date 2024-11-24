@@ -50,6 +50,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/auth").permitAll();
 //                    auth.anyRequest().permitAll();
                     auth.anyRequest().authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/api/user/login").permitAll();
                 }).csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
