@@ -44,6 +44,7 @@ public class JwtFilterService extends OncePerRequestFilter {
 
           if (!jwtUtils.isValid(token)){
               throw new CustomException("invalid token", HttpStatus.UNAUTHORIZED);
+
           }
 
           TokenInfo tokenInfo=jwtUtils.extractInfo(token);

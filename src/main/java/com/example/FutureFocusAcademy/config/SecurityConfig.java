@@ -46,10 +46,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> {
+                    auth.anyRequest().authenticated();
                     auth.requestMatchers("/swagger-ui/index.html").permitAll();
                     auth.requestMatchers("/auth").permitAll();
 //                    auth.anyRequest().permitAll();
-                    auth.anyRequest().authenticated();
                     auth.requestMatchers(HttpMethod.POST, "/api/user/login").permitAll();
                 }).csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

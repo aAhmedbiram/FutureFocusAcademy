@@ -25,7 +25,7 @@ public class JwtUtils {
 
     public String generate(SubUser admin){
         HashMap<String ,Object> claims= new HashMap<>();
-        claims.put("user id",admin.getId());
+        claims.put("_id",admin.getId());
         claims.put("email",admin.getEmail());
         claims.put("password",admin.getPassword());
         claims.put("role",admin.getRole());
@@ -41,7 +41,7 @@ public class JwtUtils {
                 .roles(claims.get("role").toString())
                 .ExpiredAt(claims.getExpiration())
                 .IssuedAt(claims.getIssuedAt())
-                .userId(claims.get("user id").toString())
+                .userId(claims.get("_id").toString())
                 .email(claims.get("email").toString())
                 .build();
     }
@@ -61,7 +61,7 @@ public class JwtUtils {
     {
         Claims claims=Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
         return TokenInfo.builder().email(claims.get("email").toString())
-                .userId(claims.get("user id").toString())
+                .userId(claims.get("_id").toString())
                 .roles(claims.get("role").toString())
                 .IssuedAt(claims.getIssuedAt())
                 .ExpiredAt(claims.getExpiration())

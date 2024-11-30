@@ -31,11 +31,11 @@ public class SubjectService {
 
     public String save(SubjectDto dto) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(dto.getId()));
+        query.addCriteria(Criteria.where("name").is(dto.getName()));
         if (template.exists(query, Subject.class)){
             throw new  CustomException ("subject is already exsist", HttpStatus.CREATED);
         }
-        return template.save(mapper.toEntity(dto).getId());
+        return template.save(mapper.toEntity(dto)).getId();
     }
 
     public void delete(String id) {
