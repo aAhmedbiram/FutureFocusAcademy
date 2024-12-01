@@ -49,7 +49,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         query.addCriteria(Criteria.where("_id").is(tokenInfo.getUserId()));
         query.addCriteria(Criteria.where("role").is(tokenInfo.getRoles()));
 
-        if (!template.exists(query,SubUser.class)){
+        if (template.exists(query,SubUser.class)){
             return false;
         }
         return true;
