@@ -47,9 +47,9 @@ public class UserService {
     public String save(SubUserDto dto) {
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         Query query =new Query();
-        query.addCriteria(Criteria.where("_id").is(dto.getId()));
+        query.addCriteria(Criteria.where("email").is(dto.getEmail()));
         if (template.exists(query,SubUser.class))
-            throw new CustomException("user is order exist",HttpStatus.CREATED);
+            throw new CustomException("user.exist",HttpStatus.NOT_ACCEPTABLE);
 //        dto.setCreatedAt();
         return template.save(mapper.toEntity(dto)).getId();
     }
@@ -58,7 +58,7 @@ public class UserService {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(id));
         if (!template.exists(query,SubUser.class))
-            throw new CustomException("user is not exist",HttpStatus.NOT_FOUND);
+            throw new CustomException("user.delete",HttpStatus.NOT_FOUND);
         template.remove(query,SubUser.class);
     }
 
@@ -66,9 +66,9 @@ public class UserService {
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         Query query =new Query();
         query.addCriteria(Criteria.where("email").is(dto.getEmail()));
-        query.addCriteria(Criteria.where("_id").is(id));
+        query.addCriteria(Criteria.where("_id").ne(id));
         if (template.exists(query,SubUser.class))
-            throw new RuntimeException("user is already exist");
+            throw new CustomException("user.exist",HttpStatus.NOT_ACCEPTABLE);
         query=new Query();
         query.addCriteria(Criteria.where("_id").is(id));
         SubUser user = template.findOne(query,SubUser.class);
@@ -109,10 +109,10 @@ public class UserService {
         try{
             user=repository.findByEmail(credentials.getEmail());
         }catch (Exception ex){
-            throw new CustomException(" credentials invalid", HttpStatus.UNAUTHORIZED);
+            throw new CustomException("credentials.invalid", HttpStatus.UNAUTHORIZED);
         }
         if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword() )){
-            throw new CustomException(" credentials invalid", HttpStatus.UNAUTHORIZED);
+            throw new CustomException(" credentials.invalid", HttpStatus.UNAUTHORIZED);
         }
         return jwtUtils.generate(user);
     }

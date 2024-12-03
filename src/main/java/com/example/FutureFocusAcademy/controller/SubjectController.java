@@ -19,7 +19,7 @@ public class SubjectController {
     @Autowired
     SubjectService service;
     @PostMapping("/teacher")
-    public String create(SubjectDto dto){
+    public String create(@RequestBody  SubjectDto dto){
         return service.save(dto);
     }
     @DeleteMapping("/{id}")

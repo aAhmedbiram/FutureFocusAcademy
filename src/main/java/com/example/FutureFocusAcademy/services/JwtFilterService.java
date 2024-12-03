@@ -37,27 +37,26 @@ public class JwtFilterService extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-      final String authorization=request.getHeader("Authorization");
+        final String authorization=request.getHeader("Authorization");
 
-      if (authorization !=null && authorization.startsWith("Bearer ")){
-          String token=authorization.substring(7);
+        if (authorization !=null && authorization.startsWith("Bearer ")){
+            String token=authorization.substring(7);
 
-          if (!jwtUtils.isValid(token)){
-              throw new CustomException("invalid token", HttpStatus.UNAUTHORIZED);
+            if (!jwtUtils.isValid(token)){
+                throw new CustomException("invalid token", HttpStatus.UNAUTHORIZED);
+            }
 
-          }
-
-          TokenInfo tokenInfo=jwtUtils.extractInfo(token);
-          if (userDetailsService.isValid(tokenInfo)){
-              throw new CustomException("invalid token", HttpStatus.UNAUTHORIZED);
-          }
-          List<GrantedAuthority> authirities= Collections.singletonList(new SimpleGrantedAuthority(tokenInfo.getRoles()));
-          UsernamePasswordAuthenticationToken authentication =
-                  new UsernamePasswordAuthenticationToken(tokenInfo.getEmail() , null ,authirities);
-          SecurityContextHolder.getContext().setAuthentication(authentication);
-          filterChain.doFilter(request,response);
-      }
+            TokenInfo tokenInfo=jwtUtils.extractInfo(token);
+            if (userDetailsService.isValid(tokenInfo)){
+                throw new CustomException("invalid token", HttpStatus.UNAUTHORIZED);
+            }
+            List<GrantedAuthority> authirities= Collections.singletonList(new SimpleGrantedAuthority(tokenInfo.getRoles()));
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(tokenInfo.getEmail() , null ,authirities);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        filterChain.doFilter(request,response);
 
 
-    }
+}
 }

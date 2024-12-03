@@ -33,7 +33,7 @@ public class SubjectService {
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is(dto.getName()));
         if (template.exists(query, Subject.class)){
-            throw new  CustomException ("subject is already exsist", HttpStatus.CREATED);
+            throw new  CustomException ("subject.exsist", HttpStatus.NOT_ACCEPTABLE);
         }
         return template.save(mapper.toEntity(dto)).getId();
     }
@@ -42,7 +42,7 @@ public class SubjectService {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(id));
         if (!template.exists(query,Subject.class)){
-            throw new CustomException("subjecct not exist",HttpStatus.NOT_FOUND);
+            throw new CustomException("subject.delete",HttpStatus.NOT_FOUND);
         }
         template.remove(query,Subject.class);
     }
@@ -50,9 +50,9 @@ public class SubjectService {
     public void update(String id, SubjectDto dto) {
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is(dto.getName()));
-        query.addCriteria(Criteria.where("_id").is(id));
+        query.addCriteria(Criteria.where("_id").ne(id));
         if (template.exists(query,Subject.class)){
-            throw new CustomException("subject is already exist",HttpStatus.CREATED);
+            throw new CustomException("subject.exist",HttpStatus.NOT_ACCEPTABLE);
         }
         query = new Query();
         query.addCriteria(Criteria.where("_id").is(id));

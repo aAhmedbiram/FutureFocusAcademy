@@ -40,7 +40,8 @@ public class GlobalExceptionHandler {
     private ResponseEntity<ExceptionResponse> exceptionHandler(Exception ex, HttpStatus status,int code,String message){
         String messsage;
         try{
-            messsage=messageSource.getMessage(message,null,Locale.ENGLISH);
+            messsage=message;
+            //messsage=messageSource.getMessage(message,null,Locale.ENGLISH);
         }catch (Exception exception){
             System.err.println("couldn't find the message in resources");
             messsage=message;
