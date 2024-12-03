@@ -17,11 +17,17 @@ public class GlobalExceptionHandler {
     MessageSource messageSource;
 
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ExceptionResponse> customExceptionHandler(CustomException ex){
-        String message =messageSource.getMessage(ex.getMessage(),null , Locale.ENGLISH);
+    public ResponseEntity<ExceptionResponse> customExceptionHandler(CustomException ex,Locale locale){
+        String message;
+        try {
+            message = messageSource.getMessage(ex.getMessage(), null, Locale.ENGLISH);
+        }
+        catch (Exception exception){
+            message = ex.getMessage();
+        }
         return new ResponseEntity<ExceptionResponse>(
-                new ExceptionResponse(message,ex.getStatus(),ex.getStatus().value(), LocalDateTime.now()).getStatus());
-    }
+                new ExceptionResponse(message,ex.getStatus(),ex.getStatus().value(), LocalDateTime.now()),ex.getStatus());
+}
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ExceptionResponse> runtimeExceptionHandler(RuntimeException ex){

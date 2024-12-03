@@ -108,8 +108,14 @@ public class UserService {
         SubUser user;
         try{
             user=repository.findByEmail(credentials.getEmail());
+
+            if ( user == null)
+                throw new CustomException("credentials.invalid", HttpStatus.UNAUTHORIZED);
+
         }catch (Exception ex){
+
             throw new CustomException("credentials.invalid", HttpStatus.UNAUTHORIZED);
+
         }
         if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword() )){
             throw new CustomException(" credentials.invalid", HttpStatus.UNAUTHORIZED);
